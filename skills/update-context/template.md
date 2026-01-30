@@ -74,6 +74,75 @@ interface Example {
 
 ---
 
+## Code Changes
+
+**[This section is populated when git diff analysis is performed]**
+
+### Files Modified
+
+| File | Lines Changed | Type of Change |
+|------|---------------|----------------|
+| `src/example.ts` | +45 / -12 | Feature addition |
+| `src/another.tsx` | +8 / -3 | Bug fix |
+| `tests/example.test.ts` | +32 / -0 | Test coverage |
+
+### Key Code Changes
+
+**Added:**
+```typescript
+// Example of significant code additions
+function newFeature() {
+  // Implementation details
+}
+```
+
+**Modified:**
+```typescript
+// Example of important modifications
+// Before: old approach
+// After: new approach
+```
+
+**Removed:**
+[What code was removed and why?]
+
+### Patterns & Architecture
+
+- **Design Pattern Used**: [e.g., Factory, Observer, etc.]
+- **Architectural Approach**: [e.g., separation of concerns, dependency injection]
+- **Code Organization**: [How the code is structured and why]
+
+### Dependencies Changed
+
+**Added:**
+```json
+{
+  "new-package": "^1.0.0"
+}
+```
+
+**Removed:**
+```json
+{
+  "old-package": "^0.5.0"
+}
+```
+
+**Updated:**
+```json
+{
+  "existing-package": "^1.2.0" // was ^1.0.0
+}
+```
+
+### Configuration Changes
+
+- `.env` changes: [List any environment variables added/modified]
+- Config files: [Any changes to tsconfig, webpack, etc.]
+- Build scripts: [Any package.json script changes]
+
+---
+
 ## Key Decisions
 
 ### Decision 1: [Decision title]

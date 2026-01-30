@@ -31,7 +31,13 @@ See the [skills directory](./skills/) for all available skills in this collectio
 
 ### Update Context
 
-A skill for maintaining persistent context documentation across all your projects.
+A skill for maintaining persistent context documentation across all your projects. Combines conversation insights with git diff analysis to create comprehensive, accurate documentation of features, bugs, and architectural decisions.
+
+**Key Features:**
+- Analyzes both conversation context and actual git changes
+- Supports staged changes, all changes, or conversation-only modes
+- Automatically extracts code details, dependencies, and test coverage
+- Creates organized markdown docs in `.claude/context-docs/`
 
 [Learn more about update-context →](./skills/update-context/)
 
