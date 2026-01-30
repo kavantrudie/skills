@@ -4,10 +4,21 @@ A global Claude Code skill for maintaining persistent context documentation acro
 
 ## Installation
 
-✅ **Already installed!** This skill is in your global Claude directory at:
+### Quick Install
+
+```bash
+# Clone into your global Claude skills directory
+git clone https://github.com/kavantrudie/claude-update-context-skill.git ~/.claude/skills/update-context
 ```
-~/.claude/skills/update-context/
+
+### Alternative: Project-Specific Installation
+
+```bash
+# Clone into your project's .claude/skills directory
+git clone https://github.com/kavantrudie/claude-update-context-skill.git ./.claude/skills/update-context
 ```
+
+After installation, restart Claude Code CLI to load the skill.
 
 ## Quick Start
 
@@ -162,6 +173,20 @@ While built for Claude Code, these markdown files work with:
 - **GitHub Copilot**: Docs provide codebase context
 - **Manual reference**: Human-readable documentation
 
+## Getting Listed on skills.sh
+
+To get this skill listed on [skills.sh](https://skills.sh):
+
+1. **Fork this repository** or create your own version
+2. **Submit a PR** to the skills.sh registry (check their documentation for the exact process)
+3. **Ensure your skill has**:
+   - A valid `SKILL.md` file with proper frontmatter
+   - Clear documentation in `README.md`
+   - An MIT or similar permissive license
+   - Example usage in the `examples/` directory
+
+Alternatively, users can install directly from this GitHub repository using the installation instructions above.
+
 ## Troubleshooting
 
 ### Skill not appearing?
@@ -179,15 +204,30 @@ Copy this skill to your project:
 cp -r ~/.claude/skills/update-context ./.claude/skills/
 ```
 
+## Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest improvements to the template
+- Add new documentation types
+- Improve the README
+
+Submit issues or pull requests on GitHub.
+
 ## Support
 
+- **GitHub Repository**: https://github.com/kavantrudie/claude-update-context-skill
 - **Claude Code Issues**: https://github.com/anthropics/claude-code/issues
 - **Skill Documentation**: See `SKILL.md` in this directory
 - **Template Reference**: See `template.md` in this directory
 - **Example**: See `examples/sample-context.md`
 
+## License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
 ---
 
-Happy documenting! 🎯
+Happy documenting!
 
-_Last updated: 2026-01-28_
+_Last updated: 2026-01-30_
