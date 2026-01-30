@@ -20,6 +20,16 @@ Use this skill to document:
 - **Performance**: Performance improvements and optimizations
 - **Security**: Security considerations and implementations
 
+## How Documentation Is Used
+
+**Important**: Context documentation creates a **searchable knowledge base**, not automatic context loading.
+
+- Documentation must be **explicitly referenced** in future sessions (e.g., "read the auth context doc")
+- Primary value is for **human developers** to understand past decisions and implementations
+- AI agents can read these docs **when asked**, but don't auto-load them at session start
+- Best used as **Architectural Decision Records (ADRs)** with code evidence
+- Searchable via grep/glob for finding relevant past context
+
 ## Usage
 
 ### Automatic Invocation
@@ -311,7 +321,9 @@ export AI_CONTEXT_DIR=".shared-context"
 - **Stage your changes first**: For cleanest documentation, stage (`git add`) the files you want to document before running the skill
 - **Use staged-only for commits**: When preparing a commit, use "staged changes only" to document exactly what's being committed
 - **Use all changes for sessions**: When documenting a full work session with multiple changes, use "all changes"
-- **Review later**: These docs serve as great onboarding material and decision logs
+- **Reference explicitly**: In future sessions, say "read .claude/context-docs/features/X.md" to load context
+- **Searchable history**: Use grep/glob to find relevant docs (e.g., "grep 'authentication' context-docs/")
+- **Team onboarding**: Primary value is for human developers to understand past decisions
 - **Update when needed**: Re-run the skill with the same name to append new findings
 - **Commit to git**: Include your context directory (e.g., `.claude/context-docs/` or `.ai-context/`) in your repository for team visibility
 - **Works with or without git**: The skill adapts - use it for planning (no git) or post-implementation (with git)

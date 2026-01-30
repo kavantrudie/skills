@@ -265,10 +265,12 @@ skills/
 - **Accurate Documentation**: Git analysis ensures docs reflect actual implementation, not just intentions
 - **Knowledge Preservation**: Never lose track of why decisions were made and what was actually changed
 - **Team Onboarding**: New developers see both reasoning and concrete code changes
-- **Context for AI**: Future Claude/Cursor sessions can read these docs with real implementation details
+- **Searchable Knowledge Base**: Future AI sessions can read these docs when explicitly referenced
 - **Living Documentation**: Update docs as implementation evolves, with git evidence of each iteration
 - **Cross-Project**: One skill works across all your projects
 - **No Manual Effort**: Automatically extracts code details from git - you just provide the "why"
+
+**Important Note**: Context docs are not automatically loaded by AI agents at session start. They must be explicitly read (e.g., "read the auth context doc" or "grep context-docs for performance"). Think of them as **searchable ADRs (Architectural Decision Records)** rather than automatic context injection.
 
 ## Customization
 
@@ -331,12 +333,13 @@ This skill works natively with multiple AI coding agents:
 - Any AI agent - Falls back to `.ai-context/` directory
 - Custom configuration - Use `--output` flag or `AI_CONTEXT_DIR` variable
 
-**Documentation Sharing:**
-The generated markdown files can be read by:
-- All AI coding agents for context in future sessions
-- Team members for onboarding and reference
-- Documentation tools for knowledge bases
-- Version control for change tracking
+**How AI Agents Use These Docs:**
+The generated markdown files serve as a searchable knowledge base:
+- **Explicit reference**: AI can read them when you say "read the context doc about X"
+- **Search/grep**: Find relevant past decisions and implementations
+- **Not automatic**: AI agents don't auto-load these at session start
+- **Team documentation**: Primary value is for human developers to understand reasoning + implementation
+- **Version controlled**: Track evolution of decisions over time in git
 
 ## Available on skills.sh
 

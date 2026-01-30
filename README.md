@@ -88,6 +88,18 @@ allowed-tools: Write, Read, Glob, Bash, Edit
 # Detailed instructions for Claude Code...
 ```
 
+## How Context Documentation Works
+
+**Important**: These context documents are **searchable knowledge bases**, not automatically-loaded context.
+
+- AI agents don't automatically read all context docs at session start
+- Docs must be **explicitly referenced** (e.g., "read .claude/context-docs/features/auth.md")
+- Primary benefit is **persistent, version-controlled documentation** for humans and AI to search/reference
+- Creates a **team knowledge base** that survives beyond individual AI sessions
+- Acts as **architectural decision records (ADRs)** with actual code evidence
+
+**Best used for**: Searchable history, team onboarding, and explicit context retrieval when needed.
+
 ## Compatibility
 
 These skills are compatible with:
