@@ -58,7 +58,29 @@ During technical conversations, I may proactively use this skill to capture impo
 
 ## Documentation Structure
 
-Documentation is organized in the project's context directory. The skill automatically detects your AI coding agent and uses the appropriate directory:
+The skill creates a two-tier documentation system:
+
+### 1. Index at Project Root (CLAUDE.md)
+
+A lightweight index file at the project root provides quick scanning of all context:
+
+```
+CLAUDE.md   # Minimal index with brief summaries + links
+```
+
+**Purpose**: Quick overview without loading full documentation. Contains:
+- Brief 1-2 sentence summaries
+- Links to detailed documentation
+- Organized by type (Features, Bugs, Architecture, etc.)
+- Alphabetically sorted within each type
+
+**What gets modified**: Only the 6 context type sections (Features, Bugs, Architecture, Refactors, Performance, Security). All other content in CLAUDE.md is preserved.
+
+See [examples/CLAUDE.md.example](examples/CLAUDE.md.example) for a complete example.
+
+### 2. Detailed Documentation (Agent-Specific Directories)
+
+Full context documentation is organized in agent-specific directories. The skill automatically detects your AI coding agent and uses the appropriate directory:
 
 - **Claude Code**: `.claude/context-docs/`
 - **Cursor**: `.cursor/context-docs/`
@@ -223,7 +245,43 @@ When this skill is invoked, I will:
    - File changes and patterns
 10. **Structure content**: Use template format for consistency, integrating both conversation and code change insights
 11. **Write/update file**: Save to appropriate location
-12. **Confirm**: Report back with file path and summary (mention which agent directory was used)
+12. **Update CLAUDE.md index** (PRESERVE ALL OTHER CONTENT):
+   - Determine project root (parent of .git directory or current directory)
+   - Check if CLAUDE.md exists at project root
+   - If CLAUDE.md doesn't exist, create it using the template from `claude-md-template.md`
+   - If CLAUDE.md exists, read and parse it:
+     - Identify the 6 context type sections: `## Features`, `## Bugs`, `## Architecture`, `## Refactors`, `## Performance`, `## Security`
+     - Extract ONLY list entries (lines starting with `- **`) from these sections
+     - **PRESERVE ALL other content** (headers, explanatory text, custom sections, user notes)
+     - Store content boundaries (what comes before, between, and after each section)
+   - Extract brief summary from the generated context file:
+     - Read the Overview section (first 1-2 sentences, max ~100 words)
+     - This will be used as the indented description under the entry
+   - Calculate relative path from project root to the context file:
+     - Example for Claude Code: `.claude/context-docs/features/shopping-cart.md`
+     - Example for Cursor: `.cursor/context-docs/features/shopping-cart.md`
+     - Use forward slashes (/) even on Windows for cross-platform compatibility
+   - Create/update entry:
+     - Format: `- **[Title]** (YYYY-MM-DD) - [Details](relative/path/to/file.md)`
+     - Next line (indented with 2 spaces): Brief summary from Overview section
+     - Title: From context file header (remove markdown # symbols)
+     - Date: From context file date field
+   - Find or create the appropriate type section:
+     - If section doesn't exist, create it in standard order: Features, Bugs, Architecture, Refactors, Performance, Security
+     - Preserve all surrounding content
+   - Update context entries:
+     - Check if an entry with the same title already exists in that section
+     - If yes, replace it (update scenario - don't duplicate)
+     - If no, add as new entry
+     - Sort all entries alphabetically by title within the section
+   - Reconstruct CLAUDE.md:
+     - Preserve all content before the first context section
+     - Write each context type section with updated entries
+     - Preserve all content between sections
+     - Preserve all content after the last context section
+   - Write updated CLAUDE.md back to project root
+   - **CRITICAL**: Only context list entries are modified, everything else stays intact
+13. **Confirm**: Report back with paths to both the detailed context file and CLAUDE.md (mention which agent directory was used)
 
 ## Git Changes Analysis
 
@@ -314,6 +372,38 @@ Each agent maintains its own context history. To share context across agents, se
 export AI_CONTEXT_DIR=".shared-context"
 ```
 
+### Example 8: CLAUDE.md Index Integration
+
+After running:
+```bash
+/update-context feature shopping-cart
+```
+
+Two files are created/updated:
+
+1. **Detailed documentation**: `.claude/context-docs/features/shopping-cart.md`
+   - Full 14-section documentation
+   - Complete code changes, decisions, testing details
+
+2. **Index entry in CLAUDE.md** (at project root):
+   ```markdown
+   ## Features
+
+   - **Shopping Cart** (2026-01-15) - [Details](.claude/context-docs/features/shopping-cart.md)
+     Real-time shopping cart with WebSocket synchronization across multiple devices
+   ```
+
+When you run the skill again to update existing context:
+```bash
+/update-context feature shopping-cart
+```
+
+Both files are updated:
+- Detailed doc: Merged with new information
+- CLAUDE.md: Entry updated with new date and summary (not duplicated)
+
+**Benefit**: AI agents can quickly scan CLAUDE.md to find relevant context, then read detailed docs only when needed. Users can also add custom content to CLAUDE.md (notes, explanations, etc.) and it will be completely preserved - only the context list entries are modified.
+
 ## Tips
 
 - **Use descriptive names**: Choose clear, searchable names for your documentation
@@ -330,6 +420,11 @@ export AI_CONTEXT_DIR=".shared-context"
 - **Share across agents**: Set `AI_CONTEXT_DIR` environment variable to use a shared context directory for multiple AI agents
 - **Custom locations**: Use `--output` flag to specify exactly where documentation should be saved
 - **Multi-agent workflows**: Each agent can maintain its own context, or share a common directory - your choice!
+- **Quick context discovery**: Check CLAUDE.md first to find relevant documentation without loading everything
+- **Minimal index**: CLAUDE.md stays lightweight - only brief summaries, not full details
+- **AI agent scanning**: AI agents can read CLAUDE.md to understand project history at a glance
+- **Link to details**: Always use the links in CLAUDE.md to read full detailed documentation
+- **Preserve your notes**: Feel free to add custom content to CLAUDE.md - only the context list entries are modified by the skill
 
 ## Integration with Development Workflow
 
